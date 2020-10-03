@@ -20,22 +20,23 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ems="10"
-            android:inputType="textShortMessage"
-            android:text="Game Info Saved"
+            android:text="@string/info"
             android:textAlignment="center" />
 
         <Button
-            android:id="@+id/greatBtn"
+            android:id="@+id/cuteBtn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:enabled="false"
-            android:text="GREAT!" />
+            android:onClick="cute"
+            android:text="@string/secondBtn" />
 
         <ImageView
             android:id="@+id/imageView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            tools:srcCompat="@color/colorPrimary" />
+            tools:srcCompat="@color/colorPrimary"
+            android:contentDescription="TODO"
+            tools:ignore="ContentDescription,HardcodedText" />
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

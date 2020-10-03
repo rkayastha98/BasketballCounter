@@ -4,4 +4,12 @@
     <string name="two_points">+2 POINTS</string>
     <string name="free_throw">FREE THROW</string>
     <string name="reset">RESET</string>
+    <string name="teamA">Team A</string>
+    <string name="teamB">Team B</string>
+    <string name="zScore">0</string>
+    <string name="display">DISPLAY</string>
+    <string name="save">SAVE</string>
+    <string name="info">Game Info Saved</string>
+    <string name="secondBtn">CUTE</string>
+    <string name="hello_blank_fragment">Fragment</string>
 </resources>

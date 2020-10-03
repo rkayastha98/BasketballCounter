@@ -9,25 +9,12 @@ import android.widget.EditText
 import android.widget.TextView
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
+import kotlinx.android.synthetic.main.fragment_main_activity.*
 
 private const val TAG = "MainActivity"
 private const val KEY_INDEX = "index"
 
 class MainActivity : AppCompatActivity() {
-    private lateinit var threeButtonA:Button
-    private lateinit var twoButtonA:Button
-    private lateinit var freeA:Button
-    private lateinit var threeButtonB:Button
-    private lateinit var twoButtonB:Button
-    private lateinit var freeB:Button
-    private lateinit var reset:Button
-    private lateinit var save:Button
-    private lateinit var display:Button
-    private lateinit var A_score:TextView
-    private lateinit var B_score:TextView
-    private lateinit var team_A:EditText
-    private lateinit var team_B:EditText
-
 
     private val bbBallViewModel: BasketballCounterViewModel by lazy {
         ViewModelProviders.of(this).get(BasketballCounterViewModel::class.java)
@@ -39,67 +26,21 @@ class MainActivity : AppCompatActivity() {
 
         val provider: ViewModelProvider = ViewModelProviders.of(this)
         val bbBallViewModel = provider.get(BasketballCounterViewModel::class.java)
-        Log.d(TAG, "Got a ViewModel: $bbBallViewModel")
 
-        threeButtonA=findViewById(R.id.A_three)
-        twoButtonA=findViewById(R.id.A_two)
-        freeA=findViewById(R.id.A_free)
-        threeButtonB=findViewById(R.id.B_three)
-        twoButtonB=findViewById(R.id.B_two)
-        freeB=findViewById(R.id.B_free)
-        reset=findViewById(R.id.reset)
-        save=findViewById(R.id.saveBtn)
-        display=findViewById(R.id.displayBtn)
-        A_score=findViewById(R.id.team_A_score)
-        B_score=findViewById(R.id.team_B_score)
-        team_A=findViewById(R.id.team_A)
-        team_B=findViewById(R.id.team_B)
+        if(savedInstanceState==null){
+            val currentFragment =
+                supportFragmentManager.findFragmentById(R.id.fragment_container)
 
-        threeButtonA.setOnClickListener{
-            bbBallViewModel.updateAScore(3)
-            updateScore()
-
+            if (currentFragment == null) {
+                val fragment = MainFragment()
+                supportFragmentManager
+                    .beginTransaction()
+                    .add(R.id.fragment_container, fragment)
+                    .commit()
+            }
         }
 
-        twoButtonA.setOnClickListener {
-            bbBallViewModel.updateAScore(2)
-            updateScore()
-        }
-
-        freeA.setOnClickListener {
-            bbBallViewModel.updateAScore(1)
-            updateScore()
-        }
-
-        threeButtonB.setOnClickListener {
-            bbBallViewModel.updateBScore(3)
-            updateScore()
-        }
-
-        twoButtonB.setOnClickListener {
-            bbBallViewModel.updateBScore(2)
-            updateScore()
-        }
-
-        freeB.setOnClickListener {
-            bbBallViewModel.updateBScore(1)
-            updateScore()
-        }
-
-        reset.setOnClickListener {
-            bbBallViewModel.resetScore()
-            updateScore()
-        }
-
-        save.setOnClickListener{
-            val intent=Intent(this, SecondActivity::class.java)
-            startActivity(intent)
-        }
-
-        display.setOnClickListener{
-
-        }
-        updateScore()
+        update()
     }
 
     override fun onStart() {
@@ -131,12 +72,36 @@ class MainActivity : AppCompatActivity() {
         super.onSaveInstanceState(savedInstanceState)
         Log.i(TAG, "onSaveInstanceState")
         savedInstanceState.putInt(KEY_INDEX, bbBallViewModel.current_a_score)
+        savedInstanceState.putInt(KEY_INDEX, bbBallViewModel.current_b_score)
     }
 
-    fun updateScore(){
-        A_score.text=bbBallViewModel.current_a_score.toString()
-        B_score.text=bbBallViewModel.current_b_score.toString()
+    fun updateA(number: Int):String{
+        bbBallViewModel.updateAScore(number)
+        return bbBallViewModel.current_a_score.toString()
+
     }
+
+    fun updateB(number: Int):String{
+        bbBallViewModel.updateBScore(number)
+        return bbBallViewModel.current_b_score.toString()
+    }
+
+    fun update(){
+        bbBallViewModel.resetScore()
+    }
+
+    fun intentStart(msg_teamA:String,msg_teamB:String){
+
+        val intent= Intent(this, SecondActivity::class.java).apply {
+            putExtra("teamA",msg_teamA)
+            putExtra("teamB",msg_teamB)
+        }
+
+        startActivity(intent)
+    }
+
+
+
 
 
 }
