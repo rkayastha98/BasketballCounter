@@ -4,12 +4,10 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
-import android.widget.Button
-import android.widget.EditText
-import android.widget.TextView
+import android.widget.Toast
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
-import kotlinx.android.synthetic.main.fragment_main_activity.*
+import java.lang.reflect.Array.newInstance
 
 private const val TAG = "MainActivity"
 private const val KEY_INDEX = "index"
@@ -38,6 +36,7 @@ class MainActivity : AppCompatActivity() {
                     .add(R.id.fragment_container, fragment)
                     .commit()
             }
+
         }
 
         update()
@@ -98,6 +97,15 @@ class MainActivity : AppCompatActivity() {
         }
 
         startActivity(intent)
+    }
+
+    fun switchFragments(){
+            val fragment = GameListFragment.newInstance()
+            supportFragmentManager
+                .beginTransaction()
+                .replace(R.id.fragment_container, fragment)
+                .commit()
+
     }
 
 

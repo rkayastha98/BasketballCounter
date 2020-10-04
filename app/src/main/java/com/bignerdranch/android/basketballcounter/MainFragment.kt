@@ -92,7 +92,7 @@ class MainFragment: Fragment() {
         }
 
         display.setOnClickListener{
-
+            (activity as MainActivity?)?.switchFragments()
         }
 
         return view
